@@ -1,8 +1,8 @@
 # Amplitude Golang SDK
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/renatoaf/amplitude-go.svg)](https://pkg.go.dev/github.com/renatoaf/amplitude-go)
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/renatoaf/amplitude-go)
+[![Go Reference](https://pkg.go.dev/badge/github.com/renatoaf/amplitude-go.svg)](https://pkg.go.dev/github.com/renatoaf/amplitude-go/amplitude)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/renatoaf/amplitude-go)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/renatoaf/amplitude-go)
 
 Amplitude unofficial client for Go, inspired in their official [SDK for Node](https://github.com/amplitude/Amplitude-Node).
 
@@ -38,15 +38,13 @@ client.Shutdown()
 
 The `Event` ([doc](https://pkg.go.dev/github.com/renatoaf/amplitude-go/amplitude/data#Event)) structure is based on API V2 [request properties](https://developers.amplitude.com/docs/http-api-v2#properties-1).
 
-Events will not be sent synchronously, the client keeps a goroutine responsible for batching and issuing uploads of events.
-
-The client will upload events:
+Events will not be sent synchronously, the client keeps a goroutine responsible for batching and issuing uploads of events. This routine will upload events:
   - after the upload interval (every 10ms by default).
   - as soon as we accumulate enough events to batch (256 events by default).
   - when `Flush` is explicitly invoked.
   - during shutdown process.
 
-`LogEvent` should never block, it will return an error in case the event was not queued (which means the event will be dropped without even being sent). This should not happen unless the uploads are not getting through.
+`LogEvent` calls, therefore, should never block. It will return an error in case the event was not queued (which means the event will be dropped without even being sent). This should not happen unless the uploads are not getting through for some reason (e.g. a misconfiguration).
 
 Check advanced parameters to learn how to tweak the default behaviour.
 
@@ -88,5 +86,14 @@ client := amplitude.NewClient("<your-api-key", amplitude.Options{
             statsd.Incr("amplitude.events", []string{"status:success"}, count)
         }
     },
+})
+```
+
+4. If you want to allow more upload batches in parallel and a larger queue, in case you anticipate a higher throughput of events:
+
+```go
+client := amplitude.NewClient("<your-api-key", amplitude.Options{
+    MaxParallelUploads: 16, 
+    MaxCachedEvents: 32000,
 })
 ```
