@@ -1,14 +1,9 @@
 // Amplitude unofficial client for Go, inspired in their official SDK for Node.
 //
-//import (
-//	"github.com/renatoaf/amplitude-go/amplitude"
-//	"github.com/renatoaf/amplitude-go/amplitude/data"
-//	"log"
-//)
-//
-//const ApiKey = "<your-api-key>"
+// Usage:
 //
 //func main() {
+//  const ApiKey = "<your-api-key>"
 //	client := amplitude.NewDefaultClient(ApiKey)
 //	client.Start()
 //

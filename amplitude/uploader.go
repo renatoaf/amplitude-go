@@ -6,7 +6,7 @@ import (
 	"github.com/renatoaf/amplitude-go/amplitude/transport"
 )
 
-// UploadCallback function executes deferred during the upload.
+// UploadCallback function executes deferred code during the upload.
 type UploadCallback func(*Uploader)
 
 // UploadBatchDelegate function executes when an upload batch happens (succeeded or not).
