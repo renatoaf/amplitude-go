@@ -147,6 +147,11 @@ func (c *Client) LogEvent(event *data.Event) error {
 	}
 }
 
+// Identify enqueues an identify event to be uploaded in background.
+func (c *Client) Identify(identify *data.Identify) error {
+	return c.LogEvent(identify.AsEvent())
+}
+
 // Flush uploads all queued events immediately.
 func (c *Client) Flush() error {
 	if c.options.OptOut {
