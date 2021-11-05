@@ -123,6 +123,11 @@ func (c *Client) LogEvent(event *data.Event) error {
 		return nil
 	}
 
+	err := validateEvent(event)
+	if err != nil {
+		return fmt.Errorf("invalid event: %w", err)
+	}
+
 	if c.state != Running {
 		return fmt.Errorf("client not running")
 	}
@@ -285,4 +290,20 @@ func buildDefaultTransport(options *Options) transport.Transport {
 	client.Timeout = options.RequestTimeout
 
 	return transport.NewHttpTransport(options.ServerUrl, client)
+}
+
+func validateEvent(event *data.Event) error {
+	if event == nil {
+		return fmt.Errorf("event must not be nil")
+	}
+
+	if event.EventType == "" {
+		return fmt.Errorf("event type must be set")
+	}
+
+	if event.UserID == "" && event.DeviceID == "" {
+		return fmt.Errorf("expected at least one of device or user id")
+	}
+
+	return nil
 }
