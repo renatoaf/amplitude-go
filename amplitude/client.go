@@ -3,12 +3,14 @@ package amplitude
 import (
 	"context"
 	"fmt"
-	"github.com/hashicorp/go-retryablehttp"
-	"github.com/renatoaf/amplitude-go/amplitude/data"
-	"github.com/renatoaf/amplitude-go/amplitude/transport"
 	"net/http"
 	"sync"
 	"time"
+
+	"github.com/hashicorp/go-retryablehttp"
+
+	"github.com/renatoaf/amplitude-go/amplitude/data"
+	"github.com/renatoaf/amplitude-go/amplitude/transport"
 )
 
 // ClientState defines the client FSM.
@@ -76,7 +78,7 @@ func (c *Client) Start() error {
 	}
 
 	c.state = Running
-	c.ctx, c.cancel = context.WithCancel(context.Background())
+	c.ctx, c.cancel = context.WithCancel(c.options.GetContext())
 	c.flush = make(chan chan interface{}, 1)
 	c.shutdown = make(chan interface{}, 1)
 	c.closing = make(chan interface{}, 1)

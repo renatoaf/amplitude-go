@@ -1,12 +1,17 @@
 package amplitude
 
 import (
-	"github.com/renatoaf/amplitude-go/amplitude/transport"
+	"context"
 	"time"
+
+	"github.com/renatoaf/amplitude-go/amplitude/transport"
 )
 
 // Options defines API Client optional parameters.
 type Options struct {
+	// Base context
+	Context context.Context
+
 	// BatchSize is the amount of events sent in a single upload batch; defaults to DefaultBatchSize.
 	BatchSize int
 
@@ -36,4 +41,12 @@ type Options struct {
 
 	// UploadDelegate allows you to hook your own code when an upload happens (for example to send metrics); defaults to nil.
 	UploadDelegate UploadBatchDelegate // defaults to nil
+}
+
+func (o *Options) GetContext() context.Context {
+	if o.Context != nil {
+		return o.Context
+	}
+
+	return context.Background()
 }

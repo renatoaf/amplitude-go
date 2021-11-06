@@ -2,6 +2,7 @@ package transport
 
 import (
 	"encoding/json"
+
 	"github.com/renatoaf/amplitude-go/amplitude/data"
 )
 

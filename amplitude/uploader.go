@@ -2,6 +2,7 @@ package amplitude
 
 import (
 	"context"
+
 	"github.com/renatoaf/amplitude-go/amplitude/data"
 	"github.com/renatoaf/amplitude-go/amplitude/transport"
 )
