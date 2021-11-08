@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/renatoaf/amplitude-go/amplitude/data"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/renatoaf/amplitude-go/amplitude/data"
 )
 
 // HttpTransport wraps upload http based transport strategy to Amplitude V2 api.

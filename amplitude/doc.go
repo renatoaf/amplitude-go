@@ -2,7 +2,7 @@
 //
 // Usage:
 //
-//func main() {
+// func main() {
 //  const ApiKey = "<your-api-key>"
 //	client := amplitude.NewDefaultClient(ApiKey)
 //	client.Start()
@@ -24,5 +24,5 @@
 //	}
 //
 //	client.Shutdown()
-//}
+// }
 package amplitude
