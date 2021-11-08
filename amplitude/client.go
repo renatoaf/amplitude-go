@@ -78,7 +78,7 @@ func (c *Client) Start() error {
 	}
 
 	c.state = Running
-	c.ctx, c.cancel = context.WithCancel(c.options.GetContext())
+	c.ctx, c.cancel = context.WithCancel(c.options.BaseContext())
 	c.flush = make(chan chan interface{}, 1)
 	c.shutdown = make(chan interface{}, 1)
 	c.closing = make(chan interface{}, 1)

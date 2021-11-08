@@ -43,7 +43,7 @@ type Options struct {
 	UploadDelegate UploadBatchDelegate // defaults to nil
 }
 
-func (o *Options) GetContext() context.Context {
+func (o *Options) BaseContext() context.Context {
 	if o.Context != nil {
 		return o.Context
 	}
