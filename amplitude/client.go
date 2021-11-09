@@ -3,6 +3,8 @@ package amplitude
 import (
 	"context"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"sync"
 	"time"
@@ -284,6 +286,7 @@ func buildDefaultTransport(options *Options) transport.Transport {
 
 	if options.MaxUploadAttempts > 1 {
 		retryableClient := retryablehttp.NewClient()
+		retryableClient.Logger = log.New(ioutil.Discard, "", log.LstdFlags)
 		retryableClient.RetryMax = options.MaxUploadAttempts - 1
 
 		client = retryableClient.StandardClient()
